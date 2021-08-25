@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>checkerboard</title>
+</head>
+<body>
+  <div id="app">
+	<board size=8></board>
+  </div>
+<script src="https://unpkg.com/vue"></script>
+  <script>
+	  Vue.component('square', {
+		  template: '<span :style="style"></span>\n',
+		  props: ['row', 'col'],
+		  methods: {
+			  getColor() {
+				  if ((Number(this.row) + Number(this.col)) % 2 == 0) {
+					  return 'red';
+				  	  }
+					  else {
+						  return 'black';
+					  }
+			  }
+		  },
+		  computed: {
+			  style() {
+				  return{
+					  backgroundColor: this.getColor(),
+					  width: '50px',
+					  height: '50px',
+					  display: 'inline-block',
+					  border: 'solid black 1px',
+					  marginRight: '0px',
+					  marginTop: '-3px'
+				  };
+			  }
+		  }
+	  });
+	Vue.component('board', {
+		template: '<div><div v-for="i in Number(size)"><square v-for="j in Number(size)" :row=i :col=j :key=i+j></square></div></div>',
+		props: ['size']
+	});
+	new Vue({
+		el: "#app",
+	});
+  </script>
+</body>
+</html>
